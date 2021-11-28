@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from router import artical
 from db import models
 from db.database import engine
-# from fastapi.responses import FileResponse
 
 app = FastAPI(
     title="artical API",

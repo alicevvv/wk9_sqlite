@@ -22,16 +22,11 @@ def get_all_articals(db: Session = Depends(get_db)):
     return db_articals.get_all(db)
 
 
-@router.get("/", response_model=ArticalResponseSchema)
-def get_all_articals(db: Session = Depends(get_db)):
-    return db_articals.get_all(db)
-
-
-@router.get("/id/{id}", response_model=List[ArticalResponseSchema])
+@router.get("/id/{id}", response_model=ArticalResponseSchema)
 def get_artical_by_id(id: int, db: Session = Depends(get_db)):
     return db_articals.get_product_by_id(id, db)
 
 
-@router.get("/{author}")
+@router.get("/{author}", response_model=List[ArticalResponseSchema])
 def get_artical_by_author(author: str, db: Session = Depends(get_db)):
     return db_articals.get_product_by_author(author, db)

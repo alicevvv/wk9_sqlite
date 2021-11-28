@@ -3,7 +3,7 @@ from db.models import articals
 from router.schemas import ArticalRequestSchema
 
 
-def create(db: Session, request: ArticalRequestSchema) -> articals:
+def create(db: Session, request: ArticalRequestSchema):
     new_artical = articals(
         title=request.title,
         author=request.author,
