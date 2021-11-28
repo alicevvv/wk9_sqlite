@@ -2,6 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from db.articalJson import artical_list
 from router import artical
+from fastapi.middleware.cors import CORSMiddleware
+# from fastapi.responses import FileResponse
 
 app = FastAPI(
     title="artical API",
@@ -12,32 +14,22 @@ app = FastAPI(
 app.include_router(artical.router)
 
 
-# @app.get("/")
-# def root():
-#     return {"title": "Hello World Alice"}
-
-
-# @app.get("/articals")
-# def get_all_artical():
-#     return artical_list
-
-
-# @app.get("/articals/id/{id}")
-# def get_artical_by_id(id):
-#     return next(
-#         (artical for artical in artical_list if artical['id'] == id
-#          ), None
-#     )
-
-
-# @app.get("/articals/{author}")
-# def get_artical_by_author(author):
-#     author_list = []
-#     for people in artical_list:
-#         if people['author'] == author:
-#             author_list.append(people)
-#     return author_list
+@app.get("/")
+def root():
+    return {"title": "Hello World ,Hi Alice"}
 
 
 if __name__ == "__main__":
     uvicorn.run("app:app", port=5000, reload=True)
+
+origins = [
+    'http://localhost:3000'
+]
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_method=["*"],
+#     allow_headers=['*']
+# )
