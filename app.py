@@ -1,6 +1,5 @@
 import uvicorn
 from fastapi import FastAPI
-from db.articalJson import artical_list
 from router import artical
 from fastapi.middleware.cors import CORSMiddleware
 # from fastapi.responses import FileResponse

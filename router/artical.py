@@ -1,5 +1,8 @@
-from fastapi import APIRouter
-from db.articalJson import artical_list
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm.session import Session
+from router.schemas import ArticalRequestSchema, ArticalResponseSchema
+from db.database import get_db
+from db import db_articals
 
 router = APIRouter(
     prefix='/api/v1/articals',
@@ -7,28 +10,26 @@ router = APIRouter(
 )
 
 
+@router.post('', response_model=ArticalResponseSchema)
+def create(request: ArticalRequestSchema, db: Session = Depends(get_db)):
+    return db_articals.create(db, request)
+
+
 @router.get('/all')
-def get_all_articals():
-    return artical_list
+def get_all_articals(db: Session = Depends(get_db)):
+    return db_articals.get_all(db)
 
 
 @router.get("/")
-async def get_all_articals():
-    return artical_list
+def get_all_articals(db: Session = Depends(get_db)):
+    return db_articals.get_all(db)
 
 
 @router.get("/id/{id}")
-async def get_artical_by_id(id):
-    return next(
-        (artical for artical in artical_list if artical['id'] == id
-         ), None
-    )
+def get_artical_by_id(id: int, db: Session = Depends(get_db)):
+    return db_articals.get_product_by_id(id, db)
 
 
 @router.get("/{author}")
-async def get_artical_by_author(author):
-    author_list = []
-    for people in artical_list:
-        if people['author'] == author:
-            author_list.append(people)
-    return author_list
+def get_artical_by_author(author: str, db: Session = Depends(get_db)):
+    return db_articals.get_product_by_author(author, db)
